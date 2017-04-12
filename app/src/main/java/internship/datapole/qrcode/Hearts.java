@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,7 +23,7 @@ import java.util.List;
 
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 
-public class Clubs extends Fragment {
+public class Hearts extends Fragment {
 
     private static final String TAG = "UserCard";
     private View view;
@@ -48,8 +47,8 @@ public class Clubs extends Fragment {
             mRecyclerView = (RecyclerView) view.findViewById(R.id.own_card_rv);
             mRecyclerView.setHasFixedSize(true);
             mLayoutManager = new LinearLayoutManager(getContext());
-            fabCount = (FloatingActionButton) view.findViewById(R.id.fab_count);
             mRecyclerView.setLayoutManager(mLayoutManager);
+            fabCount = (FloatingActionButton) view.findViewById(R.id.fab_count);
             mAdapter = new allCardRecyclerViewAdapter(getDataSet(), view.getContext());
             mRecyclerView.setAdapter(mAdapter);
         }
@@ -65,27 +64,27 @@ public class Clubs extends Fragment {
         String company = "";
         ArrayList results = new ArrayList<CardObject1>();
 
-        List<Pair<String, String>> clubsArr = new ArrayList<>();
-        clubsArr = MainActivity.clubsArr;
+        List<Pair<String, String>> heartsArr = new ArrayList<>();
+        heartsArr = MainActivity.heartsArr;
 
-        if (MainActivity.clubInd == 0) {
-            name = "No CLUBS added yet";
+        if (MainActivity.heartInd == 0) {
+            name = "No HEARTS added yet";
             company = "1";
             CardObject1 obj = new CardObject1(0, name, "", company); // make a map of images and the service and provide that here
             results.add(0, obj);
         } else {
-            for (int i = 0; i < MainActivity.clubInd; i++) {
-                name = clubsArr.get(i).first;
-                company = clubsArr.get(i).second;
+            for (int i = 0; i < MainActivity.heartInd; i++) {
+                name = heartsArr.get(i).first;
+                company = heartsArr.get(i).second;
                 Log.d(TAG, "name: " + name + "\n" + "company: " + company);
                 String cardSpec = MainActivity.cards[Integer.parseInt(company)];
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                 String format = simpleDateFormat.format(new Date());
-                CardObject1 obj = new CardObject1(0, cardSpec + " of clubs", format, company); // make a map of images and the service and provide that here
+                CardObject1 obj = new CardObject1(0, cardSpec + " of Hearts", format, company); // make a map of images and the service and provide that here
                 results.add(obj);
             }
         }
-        fabCount.setImageBitmap(textAsBitmap(MainActivity.clubInd.toString(), 40, Color.WHITE));
+        fabCount.setImageBitmap(textAsBitmap(MainActivity.heartInd.toString(), 40, Color.WHITE));
 
         Log.d(TAG, "name+company : " + name + "\n" + company);
         return results;

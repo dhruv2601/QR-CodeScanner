@@ -15,4 +15,15 @@
         android:layout_marginTop="30dp"
         android:scrollbars="vertical" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="40dp"
+        android:clickable="true"
+        app:fabSize="normal" />
+
 </RelativeLayout>

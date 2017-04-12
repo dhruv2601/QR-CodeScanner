@@ -23,7 +23,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = "MainActvity";
+    private static final String TAG = "MainActivity";
     ImageView imgScanQR;
     TextView txtResult;
     private IntentIntegrator qrScan;
@@ -113,53 +113,96 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d(TAG, "type: " + type + " number: " + number);
 
                     if (type.equals("club")) {
-                        Pair<String, String> pair = new Pair<>(type, number);
-                        clubsArr.add(clubInd++, pair);
-                        PageAdapter adapter = new PageAdapter
-                                (getSupportFragmentManager(), tabLayout.getTabCount());
+                        int flag = 0;
+                        for (int i = 0; i < clubInd; i++) {
+                            if (clubsArr.get(i).second.equals(number)) {
+                                Toast.makeText(this, "Card already present", Toast.LENGTH_SHORT).show();
+                                flag = 1;
+                                break;
+                            }
+                        }
 
-                        viewPager.setAdapter(adapter);
-                        tabLayout.getTabAt(0).setText("Clubs");
-                        tabLayout.getTabAt(1).setText("Diamonds");
-                        tabLayout.getTabAt(2).setText("Hearts");
-                        tabLayout.getTabAt(3).setText("Spades");
+                        if (flag == 0) {
+                            Pair<String, String> pair = new Pair<>(type, number);
+                            clubsArr.add(clubInd++, pair);
+                            PageAdapter adapter = new PageAdapter
+                                    (getSupportFragmentManager(), tabLayout.getTabCount());
+
+                            viewPager.setAdapter(adapter);
+                            tabLayout.getTabAt(0).setText("Clubs");
+                            tabLayout.getTabAt(1).setText("Diamonds");
+                            tabLayout.getTabAt(2).setText("Hearts");
+                            tabLayout.getTabAt(3).setText("Spades");
+                        }
                     }
                     if (type.equals("heart")) {
-                        Pair<String, String> pair = new Pair<>(type, number);
-                        heartsArr.add(heartInd++, pair);
-                        PageAdapter adapter = new PageAdapter
-                                (getSupportFragmentManager(), tabLayout.getTabCount());
+                        int flag = 0;
+                        for (int i = 0; i < heartInd; i++) {
+                            if (heartsArr.get(i).second.equals(number)) {
+                                Toast.makeText(this, "Card already present", Toast.LENGTH_SHORT).show();
+                                flag = 1;
+                                break;
+                            }
+                        }
 
-                        viewPager.setAdapter(adapter);
-                        tabLayout.getTabAt(0).setText("Clubs");
-                        tabLayout.getTabAt(1).setText("Diamonds");
-                        tabLayout.getTabAt(2).setText("Hearts");
-                        tabLayout.getTabAt(3).setText("Spades");
+                        if (flag == 0) {
+                            Pair<String, String> pair = new Pair<>(type, number);
+                            heartsArr.add(heartInd++, pair);
+                            PageAdapter adapter = new PageAdapter
+                                    (getSupportFragmentManager(), tabLayout.getTabCount());
+
+                            viewPager.setAdapter(adapter);
+                            tabLayout.getTabAt(0).setText("Clubs");
+                            tabLayout.getTabAt(1).setText("Diamonds");
+                            tabLayout.getTabAt(2).setText("Hearts");
+                            tabLayout.getTabAt(3).setText("Spades");
+                        }
                     }
                     if (type.equals("spade")) {
-                        Pair<String, String> pair = new Pair<>(type, number);
-                        spadesArr.add(spadeInd++, pair);
-                        PageAdapter adapter = new PageAdapter
-                                (getSupportFragmentManager(), tabLayout.getTabCount());
+                        int flag = 0;
+                        for (int i = 0; i < spadeInd; i++) {
+                            if (spadesArr.get(i).second.equals(number)) {
+                                Toast.makeText(this, "Card already present", Toast.LENGTH_SHORT).show();
+                                flag = 1;
+                                break;
+                            }
+                        }
 
-                        viewPager.setAdapter(adapter);
-                        tabLayout.getTabAt(0).setText("Clubs");
-                        tabLayout.getTabAt(1).setText("Diamonds");
-                        tabLayout.getTabAt(2).setText("Hearts");
-                        tabLayout.getTabAt(3).setText("Spades");
+                        if (flag == 0) {
+                            Pair<String, String> pair = new Pair<>(type, number);
+                            spadesArr.add(spadeInd++, pair);
+                            PageAdapter adapter = new PageAdapter
+                                    (getSupportFragmentManager(), tabLayout.getTabCount());
+
+                            viewPager.setAdapter(adapter);
+                            tabLayout.getTabAt(0).setText("Clubs");
+                            tabLayout.getTabAt(1).setText("Diamonds");
+                            tabLayout.getTabAt(2).setText("Hearts");
+                            tabLayout.getTabAt(3).setText("Spades");
+                        }
                     }
                     if (type.equals("diamond")) {
-                        Pair<String, String> pair = new Pair<>(type, number);
-                        diamondsArr.add(diaInd++, pair);
+                        int flag = 0;
+                        for (int i = 0; i < diaInd; i++) {
+                            if (diamondsArr.get(i).second.equals(number)) {
+                                Toast.makeText(this, "Card already present", Toast.LENGTH_SHORT).show();
+                                flag = 1;
+                                break;
+                            }
+                        }
 
-                        PageAdapter adapter = new PageAdapter
-                                (getSupportFragmentManager(), tabLayout.getTabCount());
+                        if (flag == 0) {
+                            Pair<String, String> pair = new Pair<>(type, number);
+                            diamondsArr.add(diaInd++, pair);
 
-                        viewPager.setAdapter(adapter);
-                        tabLayout.getTabAt(0).setText("Clubs");
-                        tabLayout.getTabAt(1).setText("Diamonds");
-                        tabLayout.getTabAt(2).setText("Hearts");
-                        tabLayout.getTabAt(3).setText("Spades");
+                            PageAdapter adapter = new PageAdapter
+                                    (getSupportFragmentManager(), tabLayout.getTabCount());
+                            viewPager.setAdapter(adapter);
+                            tabLayout.getTabAt(0).setText("Clubs");
+                            tabLayout.getTabAt(1).setText("Diamonds");
+                            tabLayout.getTabAt(2).setText("Hearts");
+                            tabLayout.getTabAt(3).setText("Spades");
+                        }
                     }
 
                     Toast.makeText(this, "Card Scanned, Move to next card", Toast.LENGTH_SHORT).show();

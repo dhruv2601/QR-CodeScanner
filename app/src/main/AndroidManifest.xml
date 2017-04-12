@@ -21,6 +21,15 @@
         <activity
             android:name=".Clubs"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Spades"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Hearts"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Diamonds"
+            android:screenOrientation="portrait" />
 
     </application>
 

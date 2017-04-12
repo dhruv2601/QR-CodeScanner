@@ -27,13 +27,13 @@ public class PageAdapter extends FragmentStatePagerAdapter {
                 return new Clubs();
 
             case 1:
-                return new Clubs();
+                return new Diamonds();
 
             case 2:
-                return new Clubs();
+                return new Hearts();
 
             case 3:
-                return new Clubs();
+                return new Spades();
 
             default:
                 return null;

@@ -10,7 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import com.amulyakhare.textdrawable.TextDrawable;
 
 import java.util.ArrayList;
 
@@ -55,7 +58,7 @@ public class allCardRecyclerViewAdapter
 //
 ////            i.putExtra("")                                    // yahan pe sending timke par snd the phone no.s and ither details
 //            v.getContext().startActivity(i);
-
+            Toast.makeText(v.getContext(), "", Toast.LENGTH_SHORT).show();
             myClickListener.onItemClick(getAdapterPosition(), v);
         }
     }
@@ -87,11 +90,15 @@ public class allCardRecyclerViewAdapter
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         holder.txtName.setText(mCardSet.get(position).getTxtName());
         Log.d(TAG, "mCardValS: " + mCardSet.get(position).getTxtName());
-        if (mCardSet.get(position).getmDrawableImage() ==1 ) {      // red
-            holder.imageDrawable.setImageResource(R.drawable.red);
-        } else {
-            holder.imageDrawable.setImageResource(R.drawable.black);    //black = 0
-        }
+        TextDrawable drawable1 = TextDrawable.builder()
+                .buildRoundRect(String.valueOf(position+1), Color.BLACK, 30);
+
+        holder.imageDrawable.setImageDrawable(drawable1);
+//        if (mCardSet.get(position).getmDrawableImage() ==1 ) {      // red
+//            holder.imageDrawable.setImageResource(R.drawable.red);
+//        } else {
+//            holder.imageDrawable.setImageResource(R.drawable.black);    //black = 0
+//        }
         holder.txtPosition.setText(mCardSet.get(position).getTxtPosition());
         holder.txtCompany.setText("");
     }
