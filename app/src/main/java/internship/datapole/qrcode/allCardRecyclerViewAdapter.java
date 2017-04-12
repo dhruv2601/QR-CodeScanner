@@ -93,7 +93,7 @@ public class allCardRecyclerViewAdapter
             holder.imageDrawable.setImageResource(R.drawable.black);    //black = 0
         }
         holder.txtPosition.setText(mCardSet.get(position).getTxtPosition());
-        holder.txtCompany.setText(mCardSet.get(position).getTxtCompany());
+        holder.txtCompany.setText("");
     }
 
     public void addItem(CardObject1 cardObject, int index) {

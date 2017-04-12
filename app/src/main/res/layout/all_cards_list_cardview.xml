@@ -31,6 +31,7 @@
                 android:id="@+id/txt_name_all_card"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginLeft="35dp"
                 android:layout_toRightOf="@+id/img_card"
                 android:textSize="23dp" />
@@ -38,7 +39,7 @@
             <TextView
                 android:id="@+id/txt_position_all_card"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="30dp"
                 android:layout_below="@id/txt_name_all_card"
                 android:layout_marginLeft="35dp"
                 android:layout_marginTop="10dp"
@@ -56,7 +57,5 @@
                 android:textSize="23dp" />
 
         </RelativeLayout>
-
     </android.support.v7.widget.CardView>
-
 </LinearLayout>

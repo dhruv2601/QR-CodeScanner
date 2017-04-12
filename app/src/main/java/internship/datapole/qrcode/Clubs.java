@@ -1,13 +1,9 @@
 package internship.datapole.qrcode;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,20 +12,20 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Clubs extends Fragment {
 
-    private static final String TAG = "USerCard";
+    private static final String TAG = "UserCard";
     private View view;
     private FloatingActionButton scanOwnCard;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private AppCompatButton txt;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +43,6 @@ public class Clubs extends Fragment {
             mLayoutManager = new LinearLayoutManager(getContext());
             mRecyclerView.setLayoutManager(mLayoutManager);
             mAdapter = new allCardRecyclerViewAdapter(getDataSet(), view.getContext());
-
             mRecyclerView.setAdapter(mAdapter);
         }
         return view;
@@ -66,16 +61,19 @@ public class Clubs extends Fragment {
         clubsArr = MainActivity.clubsArr;
 
         if (MainActivity.clubInd == 0) {
-            name = "0";
-            company = "0";
-            CardObject1 obj = new CardObject1(Integer.parseInt(name), "No Card yet", "", company); // make a map of images and the service and provide that here
-            results.add(obj);
+            name = "No CLUBS added yet";
+            company = "1";
+            CardObject1 obj = new CardObject1(0, name, "", company); // make a map of images and the service and provide that here
+            results.add(0, obj);
         } else {
-            String cardSpec = MainActivity.cards[Integer.parseInt(company)];
-            for (int i = 0; i <= MainActivity.clubInd; i++) {
+            for (int i = 0; i < MainActivity.clubInd; i++) {
                 name = clubsArr.get(i).first;
                 company = clubsArr.get(i).second;
-                CardObject1 obj = new CardObject1(Integer.parseInt(name), cardSpec, "", company); // make a map of images and the service and provide that here
+                Log.d(TAG, "name: " + name + "\n" + "company: " + company);
+                String cardSpec = MainActivity.cards[Integer.parseInt(company)];
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                String format = simpleDateFormat.format(new Date());
+                CardObject1 obj = new CardObject1(0, cardSpec + " of clubs", format, company); // make a map of images and the service and provide that here
                 results.add(obj);
             }
         }

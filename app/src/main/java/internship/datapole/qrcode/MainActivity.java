@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //    public static Integer heartsArr[];
 //    public static Integer spadesArr[];
 
-    public static Integer clubInd=0;
-    public static Integer diaInd=0;
-    public static Integer heartInd=0;
-    public static Integer spadeInd=0;
+    public static Integer clubInd = 0;
+    public static Integer diaInd = 0;
+    public static Integer heartInd = 0;
+    public static Integer spadeInd = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         qrScan = new IntentIntegrator(this);
 
         imgScanQR = (ImageView) findViewById(R.id.open_cam);
-        txtResult = (TextView) findViewById(R.id.result);
+//        txtResult = (TextView) findViewById(R.id.result);
 
         imgScanQR.setOnClickListener(this);
     }
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             //if qrcode has nothing in it
+
             if (result.getContents() == null) {
                 Toast.makeText(this, "Result Not Found", Toast.LENGTH_LONG).show();
             } else {
@@ -105,25 +106,60 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     JSONObject obj = new JSONObject(result.getContents());
                     //setting values to textviews
-                    txtResult.setText(obj.getString("type"));
+//                    txtResult.setText(obj.getString("type"));
                     String type = obj.getString("type");
                     String number = obj.getString("number");
+
+                    Log.d(TAG, "type: " + type + " number: " + number);
 
                     if (type.equals("club")) {
                         Pair<String, String> pair = new Pair<>(type, number);
                         clubsArr.add(clubInd++, pair);
+                        PageAdapter adapter = new PageAdapter
+                                (getSupportFragmentManager(), tabLayout.getTabCount());
+
+                        viewPager.setAdapter(adapter);
+                        tabLayout.getTabAt(0).setText("Clubs");
+                        tabLayout.getTabAt(1).setText("Diamonds");
+                        tabLayout.getTabAt(2).setText("Hearts");
+                        tabLayout.getTabAt(3).setText("Spades");
                     }
                     if (type.equals("heart")) {
                         Pair<String, String> pair = new Pair<>(type, number);
                         heartsArr.add(heartInd++, pair);
+                        PageAdapter adapter = new PageAdapter
+                                (getSupportFragmentManager(), tabLayout.getTabCount());
+
+                        viewPager.setAdapter(adapter);
+                        tabLayout.getTabAt(0).setText("Clubs");
+                        tabLayout.getTabAt(1).setText("Diamonds");
+                        tabLayout.getTabAt(2).setText("Hearts");
+                        tabLayout.getTabAt(3).setText("Spades");
                     }
                     if (type.equals("spade")) {
                         Pair<String, String> pair = new Pair<>(type, number);
                         spadesArr.add(spadeInd++, pair);
+                        PageAdapter adapter = new PageAdapter
+                                (getSupportFragmentManager(), tabLayout.getTabCount());
+
+                        viewPager.setAdapter(adapter);
+                        tabLayout.getTabAt(0).setText("Clubs");
+                        tabLayout.getTabAt(1).setText("Diamonds");
+                        tabLayout.getTabAt(2).setText("Hearts");
+                        tabLayout.getTabAt(3).setText("Spades");
                     }
                     if (type.equals("diamond")) {
                         Pair<String, String> pair = new Pair<>(type, number);
                         diamondsArr.add(diaInd++, pair);
+
+                        PageAdapter adapter = new PageAdapter
+                                (getSupportFragmentManager(), tabLayout.getTabCount());
+
+                        viewPager.setAdapter(adapter);
+                        tabLayout.getTabAt(0).setText("Clubs");
+                        tabLayout.getTabAt(1).setText("Diamonds");
+                        tabLayout.getTabAt(2).setText("Hearts");
+                        tabLayout.getTabAt(3).setText("Spades");
                     }
 
                     Toast.makeText(this, "Card Scanned, Move to next card", Toast.LENGTH_SHORT).show();
