@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="internship.datapole.qrcode.MainActivity">
+
+    <ImageView
+        android:id="@+id/open_cam"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/colorPrimary"
+        android:src="@drawable/camera" />
+
+    <TextView
+        android:id="@+id/start_click"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/open_cam"
+        android:text="Scan QR Code"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/start_click"
+        android:layout_marginTop="50dp"
+        android:text="aebguegubeugb" />
+</RelativeLayout>
