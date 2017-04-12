@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -13,21 +14,87 @@
         android:background="@color/colorPrimary"
         android:src="@drawable/camera" />
 
-    <TextView
-        android:id="@+id/start_click"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_below="@id/open_cam"
-        android:text="Scan QR Code"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="20dp" />
+    <!--<TextView-->
+    <!--android:id="@+id/start_click"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="30dp"-->
+    <!--android:layout_below="@id/open_cam"-->
+    <!--android:text="Scan QR Code"-->
+    <!--android:textAlignment="center"-->
+    <!--android:textColor="@color/black"-->
+    <!--android:textSize="20dp" />-->
 
     <TextView
         android:id="@+id/result"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_below="@id/start_click"
+        android:layout_below="@id/open_cam"
         android:layout_marginTop="50dp"
         android:text="aebguegubeugb" />
+
+    <!--<android.support.v7.widget.Toolbar-->
+    <!--android:id="@+id/myToolbar"-->
+    <!--android:layout_below="@id/start_click"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="55dp"-->
+    <!--android:background="@color/black"-->
+    <!--android:fitsSystemWindows="true"-->
+    <!--android:theme="@style/AppTheme.Toolbar"-->
+    <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light">-->
+
+    <!--<android.support.design.widget.TextInputLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+    <!--&lt;!&ndash;&ndash;&gt;-->
+    <!--&lt;!&ndash;<EditText&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/edt_search"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:visibility="gone"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="300dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginRight="30dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:background="@color/black"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:hint="Search Contacts..."&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textColor="@color/off_white"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textColorHint="@color/off_white" />&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:visibility="gone"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="30dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="30dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginTop="7dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_toRightOf="@id/edt_search"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:src="@drawable/search" />&ndash;&gt;-->
+
+    <!--</RelativeLayout>-->
+    <!--</android.support.design.widget.TextInputLayout>-->
+    <!--</android.support.v7.widget.Toolbar>-->
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        style="@style/MyCustomTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/open_cam"
+        android:background="@color/black"
+        android:elevation="20dp"
+        android:minHeight="?attr/actionBarSize"
+        android:overScrollMode="never"
+        android:requiresFadingEdge="vertical"
+        app:tabGravity="fill"
+        app:tabIndicatorHeight="4dp"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@android:color/white"
+        app:tabTextAppearance="@style/textSize"
+        app:tabTextColor="@android:color/white" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="105dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </RelativeLayout>

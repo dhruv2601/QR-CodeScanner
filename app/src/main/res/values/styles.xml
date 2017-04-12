@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/colorPrimaryDark</item>
+        <item name="android:textIsSelectable">true</item>
+        <item name="android:tabStripEnabled">false</item>
+    </style>
+
+    <style name="textSize" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">17sp</item>
+    </style>
+
 </resources>

@@ -1,8 +1,12 @@
 package internship.datapole.qrcode;
 
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,40 +18,75 @@ import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = "MainActvity";
     ImageView imgScanQR;
-    TextView txtScanQR;
     TextView txtResult;
     private IntentIntegrator qrScan;
+    public TabLayout tabLayout;
+    public ViewPager viewPager;
+    public static List<Pair<String, String>> clubsArr;
+    public static List<Pair<String, String>> diamondsArr;
+    public static List<Pair<String, String>> heartsArr;
+    public static List<Pair<String, String>> spadesArr;
+
+    public static String[] cards = new String[]{"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "Jack", "Queen", "King"};
+
+//    public static Integer clubsArr[];
+//    public static Integer diamondsArr[];
+//    public static Integer heartsArr[];
+//    public static Integer spadesArr[];
+
+    public static Integer clubInd=0;
+    public static Integer diaInd=0;
+    public static Integer heartInd=0;
+    public static Integer spadeInd=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        clubsArr = new ArrayList<>();
+        diamondsArr = new ArrayList<>();
+        heartsArr = new ArrayList<>();
+        spadesArr = new ArrayList<>();
+
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+
+        tabLayout.addTab(tabLayout.newTab().setText("Clubs"));    //0
+        tabLayout.addTab(tabLayout.newTab().setText("Diamonds"));      //1
+        tabLayout.addTab(tabLayout.newTab().setText("Hearts"));      //2
+        tabLayout.addTab(tabLayout.newTab().setText("Spades"));      //3
+
+        Log.d(TAG, "initAdapter");
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        Log.d(TAG, "initAdapter1");
+
+        Log.d(TAG, "getSupport: " + this.getSupportFragmentManager() + "\n" + tabLayout.getTabCount());
+        final PageAdapter adapter = new PageAdapter
+                (getSupportFragmentManager(), tabLayout.getTabCount());
+
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setText("Clubs");
+        tabLayout.getTabAt(1).setText("Diamonds");
+        tabLayout.getTabAt(2).setText("Hearts");
+        tabLayout.getTabAt(3).setText("Spades");
+
         qrScan = new IntentIntegrator(this);
 
         imgScanQR = (ImageView) findViewById(R.id.open_cam);
-        txtScanQR = (TextView) findViewById(R.id.start_click);
         txtResult = (TextView) findViewById(R.id.result);
 
         imgScanQR.setOnClickListener(this);
-//        txtScanQR.setOnClickListener(this);
-
-//        imgScanQR.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
-//
-//        txtScanQR.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //same code as above
-//            }
-//        });
     }
 
     @Override
@@ -61,16 +100,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //if qr contains data
                 try {
                     //converting the data to json
+
+//                    >>>>>>>>>>>>>>>>>>   AVOID REPEATITION HERE  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
                     JSONObject obj = new JSONObject(result.getContents());
                     //setting values to textviews
-                    txtResult.setText(obj.getString("name") + "\n" + obj.getString("address"));
-//                    textViewAddress.setText(obj.getString("address"));
+                    txtResult.setText(obj.getString("type"));
+                    String type = obj.getString("type");
+                    String number = obj.getString("number");
+
+                    if (type.equals("club")) {
+                        Pair<String, String> pair = new Pair<>(type, number);
+                        clubsArr.add(clubInd++, pair);
+                    }
+                    if (type.equals("heart")) {
+                        Pair<String, String> pair = new Pair<>(type, number);
+                        heartsArr.add(heartInd++, pair);
+                    }
+                    if (type.equals("spade")) {
+                        Pair<String, String> pair = new Pair<>(type, number);
+                        spadesArr.add(spadeInd++, pair);
+                    }
+                    if (type.equals("diamond")) {
+                        Pair<String, String> pair = new Pair<>(type, number);
+                        diamondsArr.add(diaInd++, pair);
+                    }
+
+                    Toast.makeText(this, "Card Scanned, Move to next card", Toast.LENGTH_SHORT).show();
+                    qrScan.initiateScan();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     //if control comes here
                     //that means the encoded format not matches
                     //in this case you can display whatever data is available on the qrcode
                     //to a toast
+                    Log.d(TAG, "error: " + e.getMessage());
                     Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
                 }
             }
@@ -78,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
     @Override
     public void onClick(View view) {
         //initiating the qr code scan
