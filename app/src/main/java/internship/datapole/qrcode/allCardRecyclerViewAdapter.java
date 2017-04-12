@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +60,7 @@ public class allCardRecyclerViewAdapter
 ////            i.putExtra("")                                    // yahan pe sending timke par snd the phone no.s and ither details
 //            v.getContext().startActivity(i);
             Toast.makeText(v.getContext(), "", Toast.LENGTH_SHORT).show();
-            myClickListener.onItemClick(getAdapterPosition(), v);
+//            myClickListener.onItemClick(getAdapterPosition(), v);
         }
     }
 

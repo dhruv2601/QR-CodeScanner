@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -87,9 +89,36 @@ public class Clubs extends Fragment {
         }
         fabCount.setImageBitmap(textAsBitmap(MainActivity.clubInd.toString(), 40, Color.WHITE));
 
+        ItemTouchHelper ith = new ItemTouchHelper(_ithCallback);
+        ith.attachToRecyclerView(mRecyclerView);
+
         Log.d(TAG, "name+company : " + name + "\n" + company);
         return results;
     }
+
+    ItemTouchHelper.Callback _ithCallback = new ItemTouchHelper.Callback() {
+        //and in your imlpementaion of
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            // get the viewHolder's and target's positions in your adapter data, swap them
+            Collections.swap(getDataSet(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
+            // and notify the adapter that its dataset has changed
+            mAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+            return true;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            //TODO
+        }
+
+        //defines the enabled move directions in each state (idle, swiping, dragging).
+        @Override
+        public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
+                    ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
+        }
+    };
+
     public static Bitmap textAsBitmap(String text, float textSize, int textColor) {
         Paint paint = new Paint(ANTI_ALIAS_FLAG);
         paint.setTextSize(textSize);
