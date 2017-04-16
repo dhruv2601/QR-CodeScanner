@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static Integer heartInd = 0;
     public static Integer spadeInd = 0;
 
+    public  PageAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d(TAG, "initAdapter1");
 
         Log.d(TAG, "getSupport: " + this.getSupportFragmentManager() + "\n" + tabLayout.getTabCount());
-        final PageAdapter adapter = new PageAdapter
+        adapter = new PageAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
 
         viewPager.setAdapter(adapter);
@@ -126,8 +128,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (flag == 0) {
                             Pair<String, String> pair = new Pair<>(type, number);
                             clubsArr.add(clubInd++, pair);
-                            PageAdapter adapter = new PageAdapter
-                                    (getSupportFragmentManager(), tabLayout.getTabCount());
+                            Log.d(TAG,"MainAct: "+"club++: "+clubInd);
+//                            PageAdapter adapter = new PageAdapter
+//                                    (getSupportFragmentManager(), tabLayout.getTabCount());
+                            adapter.notifyDataSetChanged();
 
                             viewPager.setAdapter(adapter);
                             tabLayout.getTabAt(0).setText("Clubs");
@@ -149,15 +153,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (flag == 0) {
                             Pair<String, String> pair = new Pair<>(type, number);
                             heartsArr.add(heartInd++, pair);
-                            PageAdapter adapter = new PageAdapter
-                                    (getSupportFragmentManager(), tabLayout.getTabCount());
+//                            PageAdapter adapter = new PageAdapter
+//                                    (getSupportFragmentManager(), tabLayout.getTabCount());
+                            adapter.notifyDataSetChanged();
 
+//                            adapter.notifyDataSetChanged();
                             viewPager.setAdapter(adapter);
                             tabLayout.getTabAt(0).setText("Clubs");
                             tabLayout.getTabAt(1).setText("Diamonds");
                             tabLayout.getTabAt(2).setText("Hearts");
                             tabLayout.getTabAt(3).setText("Spades");
                         }
+                        Log.d(TAG,"heartsMain: "+heartsArr.size());
                     }
                     if (type.equals("spade")) {
                         int flag = 0;
@@ -172,9 +179,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (flag == 0) {
                             Pair<String, String> pair = new Pair<>(type, number);
                             spadesArr.add(spadeInd++, pair);
-                            PageAdapter adapter = new PageAdapter
-                                    (getSupportFragmentManager(), tabLayout.getTabCount());
-
+//                            PageAdapter adapter = new PageAdapter
+//                                    (getSupportFragmentManager(), tabLayout.getTabCount());
+                            adapter.notifyDataSetChanged();
                             viewPager.setAdapter(adapter);
                             tabLayout.getTabAt(0).setText("Clubs");
                             tabLayout.getTabAt(1).setText("Diamonds");
@@ -195,9 +202,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (flag == 0) {
                             Pair<String, String> pair = new Pair<>(type, number);
                             diamondsArr.add(diaInd++, pair);
+                            //                            PageAdapter adapter = new PageAdapter
+//                                    (getSupportFragmentManager(), tabLayout.getTabCount());
+                            adapter.notifyDataSetChanged();
 
-                            PageAdapter adapter = new PageAdapter
-                                    (getSupportFragmentManager(), tabLayout.getTabCount());
                             viewPager.setAdapter(adapter);
                             tabLayout.getTabAt(0).setText("Clubs");
                             tabLayout.getTabAt(1).setText("Diamonds");

@@ -76,6 +76,7 @@ public class Clubs extends Fragment {
             CardObject1 obj = new CardObject1(0, name, "", company); // make a map of images and the service and provide that here
             results.add(0, obj);
         } else {
+                Log.d(TAG,"ClubIND:: "+MainActivity.clubInd);
             for (int i = 0; i < MainActivity.clubInd; i++) {
                 name = clubsArr.get(i).first;
                 company = clubsArr.get(i).second;
@@ -87,6 +88,7 @@ public class Clubs extends Fragment {
                 results.add(obj);
             }
         }
+
         fabCount.setImageBitmap(textAsBitmap(MainActivity.clubInd.toString(), 40, Color.WHITE));
 
         ItemTouchHelper ith = new ItemTouchHelper(_ithCallback);

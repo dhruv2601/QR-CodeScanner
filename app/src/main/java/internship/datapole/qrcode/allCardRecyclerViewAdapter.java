@@ -28,14 +28,15 @@ public class allCardRecyclerViewAdapter
         .DataObjectHolder> {
 
     public static final String TAG = "myRecViewAdapter";
-    private ArrayList<CardObject1> mCardSet;
+    private static ArrayList<CardObject1> mCardSet;
     private static MyClickListener myClickListener;
     private Context context;
 
-    public static class DataObjectHolder extends RecyclerView.ViewHolder
+    public class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
         ImageView imageDrawable;
+        ImageView imgDel;
         TextView txtName;
         TextView txtPosition;
         TextView txtCompany;
@@ -43,9 +44,19 @@ public class allCardRecyclerViewAdapter
         public DataObjectHolder(View itemView) {
             super(itemView);
             imageDrawable = (ImageView) itemView.findViewById(R.id.img_card);
+            imgDel = (ImageView) itemView.findViewById(R.id.del);
             txtName = (TextView) itemView.findViewById(R.id.txt_name_all_card);
             txtPosition = (TextView) itemView.findViewById(R.id.txt_position_all_card);
             txtCompany = (TextView) itemView.findViewById(R.id.txt_company_all_card);
+
+            imgDel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mCardSet.remove(getAdapterPosition());
+                    notifyItemRemoved(getAdapterPosition());
+                    notifyItemRangeChanged(getAdapterPosition(), mCardSet.size());
+                }
+            });
 
             Log.d(TAG, "dataObjHolderALLCARDS");
             itemView.setOnClickListener(this);
@@ -125,6 +136,11 @@ public class allCardRecyclerViewAdapter
         return x;
     }
 
+    public void removeAt(int position) {
+        mCardSet.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mCardSet.size());
+    }
     public interface MyClickListener {
         public void onItemClick(int position, View v);
     }

@@ -50,8 +50,11 @@ public class Hearts extends Fragment {
             mRecyclerView.setHasFixedSize(true);
             mLayoutManager = new LinearLayoutManager(getContext());
             mRecyclerView.setLayoutManager(mLayoutManager);
+//            mRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
+
             fabCount = (FloatingActionButton) view.findViewById(R.id.fab_count);
             mAdapter = new allCardRecyclerViewAdapter(getDataSet(), view.getContext());
+//            mAdapter.notifyDataSetChanged();
             mRecyclerView.setAdapter(mAdapter);
 
             ItemTouchHelper ith = new ItemTouchHelper(_ithCallback);
@@ -101,6 +104,7 @@ public class Hearts extends Fragment {
             CardObject1 obj = new CardObject1(0, name, "", company); // make a map of images and the service and provide that here
             results.add(0, obj);
         } else {
+            Log.d(TAG,"heartINd::  "+MainActivity.heartInd+"\n"+MainActivity.heartsArr.size());
             for (int i = 0; i < MainActivity.heartInd; i++) {
                 name = heartsArr.get(i).first;
                 company = heartsArr.get(i).second;
@@ -132,4 +136,5 @@ public class Hearts extends Fragment {
         canvas.drawText(text, 0, baseline, paint);
         return image;
     }
+
 }

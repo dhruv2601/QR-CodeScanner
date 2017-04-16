@@ -83,6 +83,7 @@ public class Spades extends Fragment {
                 String cardSpec = MainActivity.cards[Integer.parseInt(company)];
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                 String format = simpleDateFormat.format(new Date());
+
                 CardObject1 obj = new CardObject1(0, cardSpec + " of spades", format, company); // make a map of images and the service and provide that here
                 results.add(obj);
             }
