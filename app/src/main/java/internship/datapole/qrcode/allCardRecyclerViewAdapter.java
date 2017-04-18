@@ -52,6 +52,7 @@ public class allCardRecyclerViewAdapter
             imgDel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+//                    mCardSet.get(0).
                     mCardSet.remove(getAdapterPosition());
                     notifyItemRemoved(getAdapterPosition());
                     notifyItemRangeChanged(getAdapterPosition(), mCardSet.size());
