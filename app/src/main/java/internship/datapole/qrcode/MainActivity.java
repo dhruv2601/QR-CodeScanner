@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "MainActivity";
     ImageView imgScanQR;
     TextView txtResult;
-    private IntentIntegrator qrScan;
+    private IntentIntegrator integrator;
     public TabLayout tabLayout;
     public ViewPager viewPager;
     public static List<Pair<String, String>> clubsArr;
@@ -53,6 +53,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        integrator = new IntentIntegrator(this);
+        integrator.setCaptureActivity(AnyOrientationCaptureActivity.class);
+//        integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
+        integrator.setPrompt("Scan something");
+//        integrator.setOrientationLocked(false);
+//        integrator.setBeepEnabled(false);
+//        integrator.initiateScan();
 
         clubsArr = new ArrayList<>();
         diamondsArr = new ArrayList<>();
@@ -84,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tabLayout.getTabAt(2).setText("Hearts");
         tabLayout.getTabAt(3).setText("Spades");
 
-        qrScan = new IntentIntegrator(this);
+        integrator = new IntentIntegrator(this);
 
         imgScanQR = (ImageView) findViewById(R.id.open_cam);
 //        txtResult = (TextView) findViewById(R.id.result);
@@ -215,7 +223,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
 
                     Toast.makeText(this, "Card Scanned, Move to next card", Toast.LENGTH_SHORT).show();
-                    qrScan.initiateScan();
+                    integrator.setCaptureActivity(AnyOrientationCaptureActivity.class);
+//                    integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
+                    integrator.setPrompt("Scan something");
+//                    integrator.setOrientationLocked(false);
+//                    integrator.setBeepEnabled(false);
+                    integrator.initiateScan();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     //if control comes here
@@ -234,6 +247,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         //initiating the qr code scan
-        qrScan.initiateScan();
+        integrator.setCaptureActivity(AnyOrientationCaptureActivity.class);
+//        integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
+        integrator.setPrompt("Scan something");
+//        integrator.setOrientationLocked(false);
+//        integrator.setBeepEnabled(false);
+        integrator.initiateScan();
     }
 }

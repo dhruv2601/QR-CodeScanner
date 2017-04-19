@@ -53,6 +53,7 @@ public class allCardRecyclerViewAdapter
                 @Override
                 public void onClick(View view) {
 //                    mCardSet.get(0).
+
                     mCardSet.remove(getAdapterPosition());
                     notifyItemRemoved(getAdapterPosition());
                     notifyItemRangeChanged(getAdapterPosition(), mCardSet.size());

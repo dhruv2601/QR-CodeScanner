@@ -378,8 +378,10 @@ public final class CameraManager {
 
         Camera.Size realPreviewSize = camera.getParameters().getPreviewSize();
         if (realPreviewSize == null) {
+            Log.d(TAG,"realPreviewSize = null");
             previewSize = requestedPreviewSize;
         } else {
+            Log.d(TAG,"realPreviewSize != null");
             previewSize = new Size(realPreviewSize.width, realPreviewSize.height);
         }
         cameraPreviewCallback.setResolution(previewSize);
