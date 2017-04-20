@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.amulyakhare.textdrawable.TextDrawable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by dhruv on 29/12/16.
@@ -49,14 +51,55 @@ public class allCardRecyclerViewAdapter
             txtPosition = (TextView) itemView.findViewById(R.id.txt_position_all_card);
             txtCompany = (TextView) itemView.findViewById(R.id.txt_company_all_card);
 
+            final int tabPos = MainActivity.tabLayout.getSelectedTabPosition();
+            Log.d(TAG, "tabPos: " + tabPos);
+
             imgDel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    mCardSet.get(0).
+                    Log.d(TAG, "getAda: " + getAdapterPosition());
+                    int x = getAdapterPosition();
 
-                    mCardSet.remove(getAdapterPosition());
+                    Log.d(TAG, "getCar: " + mCardSet.size());
+                    mCardSet.remove(x);
+                    Log.d(TAG, "after:: ");
                     notifyItemRemoved(getAdapterPosition());
-                    notifyItemRangeChanged(getAdapterPosition(), mCardSet.size());
+                    notifyItemRangeRemoved(0, MainActivity.heartInd);
+                    notifyItemRangeInserted(0, MainActivity.heartInd-1);
+                    notifyDataSetChanged();
+
+//                    notifyItemRangeChanged(getAdapterPosition(), mCardSet.size());
+
+                    if (MainActivity.tabPos == 0) {
+                        if (MainActivity.clubInd > 0) {
+                            MainActivity.clubsArr.remove(x);
+                            MainActivity.clubInd--;
+                        }
+                    } else if (MainActivity.tabPos == 1) {
+                        if (MainActivity.diaInd > 0) {
+                            MainActivity.diamondsArr.remove(x);
+                            MainActivity.diaInd--;
+                        }
+                    } else if (MainActivity.tabPos == 2) {
+                        if (MainActivity.heartInd > 0) {
+                            Log.d(TAG, "hearInd: " + MainActivity.heartInd);
+                            List<Pair<String, String>> temp = new ArrayList<Pair<String, String>>();
+                            int ind=0;
+                            for (int i = 0; i < MainActivity.heartsArr.size(); i++) {
+                                if (i != x) {
+                                    temp.add(ind++, MainActivity.heartsArr.get(i));
+                                }
+                            }
+                            MainActivity.heartsArr = temp;
+//                            MainActivity.heartsArr.remove(x);
+                            MainActivity.heartInd--;
+                        }
+                    } else if (MainActivity.tabPos == 3) {
+                        if (MainActivity.spadeInd > 0) {
+                            MainActivity.spadesArr.remove(x);
+                            MainActivity.spadeInd--;
+                        }
+                    }
                 }
             });
 
@@ -66,12 +109,6 @@ public class allCardRecyclerViewAdapter
 
         @Override
         public void onClick(View v) {
-//            Intent i = new Intent(v.getContext(), ShowCardDetails.class);
-//            int pos = getAdapterPosition();
-//            i.putExtra("CardPosition", pos);
-//
-////            i.putExtra("")                                    // yahan pe sending timke par snd the phone no.s and ither details
-//            v.getContext().startActivity(i);
             Toast.makeText(v.getContext(), "", Toast.LENGTH_SHORT).show();
 //            myClickListener.onItemClick(getAdapterPosition(), v);
         }
@@ -95,6 +132,9 @@ public class allCardRecyclerViewAdapter
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.all_cards_list_cardview, parent, false);
 
+        int id = ((ViewGroup) parent.getParent()).getId();
+        Log.d(TAG, "ID:::: " + id);
+
         Log.d(TAG, "onCrateViewHolderOfAllCArds");
         DataObjectHolder dataObjectHolder = new DataObjectHolder(view);
         return dataObjectHolder;
@@ -105,14 +145,11 @@ public class allCardRecyclerViewAdapter
         holder.txtName.setText(mCardSet.get(position).getTxtName());
         Log.d(TAG, "mCardValS: " + mCardSet.get(position).getTxtName());
         TextDrawable drawable1 = TextDrawable.builder()
-                .buildRoundRect(String.valueOf(position+1), Color.BLACK, 30);
+                .buildRoundRect(String.valueOf(position + 1), Color.BLACK, 30);
 
+        int id = holder.imgDel.getId();
+        Log.d(TAG, "idllll " + id);
         holder.imageDrawable.setImageDrawable(drawable1);
-//        if (mCardSet.get(position).getmDrawableImage() ==1 ) {      // red
-//            holder.imageDrawable.setImageResource(R.drawable.red);
-//        } else {
-//            holder.imageDrawable.setImageResource(R.drawable.black);    //black = 0
-//        }
         holder.txtPosition.setText(mCardSet.get(position).getTxtPosition());
         holder.txtCompany.setText("");
     }
@@ -143,6 +180,7 @@ public class allCardRecyclerViewAdapter
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, mCardSet.size());
     }
+
     public interface MyClickListener {
         public void onItemClick(int position, View v);
     }

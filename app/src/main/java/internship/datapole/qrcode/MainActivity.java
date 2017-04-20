@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageView imgScanQR;
     TextView txtResult;
     private IntentIntegrator integrator;
-    public TabLayout tabLayout;
+    public static TabLayout tabLayout;
     public ViewPager viewPager;
     public static List<Pair<String, String>> clubsArr;
     public static List<Pair<String, String>> diamondsArr;
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static String[] cards = new String[]{"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "Jack", "Queen", "King"};
 
+    public static int tabPos;
 //    public static Integer clubsArr[];
 //    public static Integer diamondsArr[];
 //    public static Integer heartsArr[];
@@ -91,9 +92,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tabLayout.getTabAt(1).setText("Diamonds");
         tabLayout.getTabAt(2).setText("Hearts");
         tabLayout.getTabAt(3).setText("Spades");
-
         integrator = new IntentIntegrator(this);
 
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
+            @Override
+            public void onTabSelected(TabLayout.Tab tab){
+                int position = tab.getPosition();
+                tabPos = position;
+                Log.d(TAG,"pos:: "+position);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         imgScanQR = (ImageView) findViewById(R.id.open_cam);
 //        txtResult = (TextView) findViewById(R.id.result);
 
