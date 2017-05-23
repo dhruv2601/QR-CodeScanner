@@ -65,7 +65,7 @@ public class allCardRecyclerViewAdapter
                     Log.d(TAG, "after:: ");
                     notifyItemRemoved(getAdapterPosition());
                     notifyItemRangeRemoved(0, MainActivity.heartInd);
-                    notifyItemRangeInserted(0, MainActivity.heartInd-1);
+                    notifyItemRangeInserted(0, MainActivity.heartInd - 1);
                     notifyDataSetChanged();
 
 //                    notifyItemRangeChanged(getAdapterPosition(), mCardSet.size());
@@ -84,7 +84,7 @@ public class allCardRecyclerViewAdapter
                         if (MainActivity.heartInd > 0) {
                             Log.d(TAG, "hearInd: " + MainActivity.heartInd);
                             List<Pair<String, String>> temp = new ArrayList<Pair<String, String>>();
-                            int ind=0;
+                            int ind = 0;
                             for (int i = 0; i < MainActivity.heartsArr.size(); i++) {
                                 if (i != x) {
                                     temp.add(ind++, MainActivity.heartsArr.get(i));
@@ -145,7 +145,7 @@ public class allCardRecyclerViewAdapter
         holder.txtName.setText(mCardSet.get(position).getTxtName());
         Log.d(TAG, "mCardValS: " + mCardSet.get(position).getTxtName());
         TextDrawable drawable1 = TextDrawable.builder()
-                .buildRoundRect(String.valueOf(position + 1), Color.BLACK, 30);
+                .buildRoundRect(String.valueOf(position + 1), Color.TRANSPARENT, 30);
 
         int id = holder.imgDel.getId();
         Log.d(TAG, "idllll " + id);

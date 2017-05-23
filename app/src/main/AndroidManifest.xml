@@ -20,12 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-
+        <activity
+            android:name=".MainActivity"         >
+            <!--<activity android:theme="@style/NoActionBar" />-->
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
@@ -43,8 +42,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".AnyOrientationCaptureActivity"
-            android:stateNotNeeded="true"
             android:screenOrientation="portrait"
+            android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme"
             android:windowSoftInputMode="stateAlwaysHidden">
 

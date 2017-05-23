@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="android:windowTitleSize">0dp</item>-->
     </style>
 
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
@@ -18,4 +20,11 @@
         <item name="android:textSize">17sp</item>
     </style>
 
+    <!--<style name="NoActionBar" -->
+        <!--parent="Theme.AppCompat.NoActionBar">-->
+        <!--<item name="android:windowActionBar">false</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+    <!--</style>-->
+
 </resources>
+

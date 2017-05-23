@@ -1,6 +1,8 @@
 package internship.datapole.qrcode;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -9,12 +11,17 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.journeyapps.barcodescanner.CompoundBarcodeView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String TAG = "MainActivity";
     ImageView imgScanQR;
+    ImageView imgGrad;
     TextView txtResult;
     private IntentIntegrator integrator;
     public static TabLayout tabLayout;
@@ -48,12 +56,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static Integer heartInd = 0;
     public static Integer spadeInd = 0;
 
-    public  PageAdapter adapter;
+    public PageAdapter adapter;
+    private CompoundBarcodeView barcodeView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getSupportActionBar().hide();
+
+        barcodeView = (CompoundBarcodeView) findViewById(R.id.bar_code);
 
         integrator = new IntentIntegrator(this);
         integrator.setCaptureActivity(AnyOrientationCaptureActivity.class);
@@ -94,12 +110,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tabLayout.getTabAt(3).setText("Spades");
         integrator = new IntentIntegrator(this);
 
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
+        imgGrad = (ImageView) findViewById(R.id.img_grad);
+        final int[] imageArray = {R.drawable.atlas_gradient, R.drawable.blue_gradient};
+
+        final Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            int i = 0;
+
+            public void run() {
+                imgGrad.setImageResource(imageArray[i]);
+                i++;
+                if (i > imageArray.length - 1) {
+                    i = 0;
+                }
+                handler.postDelayed(this, 2300);
+                Animation myFadeInAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fadein);
+                imgGrad.startAnimation(myFadeInAnimation);
+            }
+        };
+
+        handler.postDelayed(runnable, 2300);
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab){
+            public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 tabPos = position;
-                Log.d(TAG,"pos:: "+position);
+                Log.d(TAG, "pos:: " + position);
             }
 
             @Override
@@ -154,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (flag == 0) {
                             Pair<String, String> pair = new Pair<>(type, number);
                             clubsArr.add(clubInd++, pair);
-                            Log.d(TAG,"MainAct: "+"club++: "+clubInd);
+                            Log.d(TAG, "MainAct: " + "club++: " + clubInd);
 //                            PageAdapter adapter = new PageAdapter
 //                                    (getSupportFragmentManager(), tabLayout.getTabCount());
                             adapter.notifyDataSetChanged();
@@ -190,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             tabLayout.getTabAt(2).setText("Hearts");
                             tabLayout.getTabAt(3).setText("Spades");
                         }
-                        Log.d(TAG,"heartsMain: "+heartsArr.size());
+                        Log.d(TAG, "heartsMain: " + heartsArr.size());
                     }
                     if (type.equals("spade")) {
                         int flag = 0;
@@ -262,14 +299,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    void controlVisBAR() {
+        barcodeView.setVisibility(View.VISIBLE);
+        imgGrad.setVisibility(View.GONE);
+        imgScanQR.setVisibility(View.GONE);
+    }
+
+    void controlVisCAM() {
+        barcodeView.setVisibility(View.GONE);
+        imgGrad.setVisibility(View.VISIBLE);
+        imgScanQR.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void onClick(View view) {
         //initiating the qr code scan
-        integrator.setCaptureActivity(AnyOrientationCaptureActivity.class);
-//        integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
-        integrator.setPrompt("Scan something");
-//        integrator.setOrientationLocked(false);
-//        integrator.setBeepEnabled(false);
-        integrator.initiateScan();
+
+        controlVisBAR();
+        barcodeView.resume();
+
+        barcodeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controlVisCAM();
+            }
+        });
     }
 }
