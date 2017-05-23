@@ -1,6 +1,7 @@
 package internship.datapole.qrcode;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -36,9 +37,9 @@ public class Clubs extends Fragment {
     private View view;
     private FloatingActionButton scanOwnCard;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    public static allCardRecyclerViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private FloatingActionButton fabCount;
+    public static FloatingActionButton fabCount;
     private FloatingActionButton fabDel;
     HashMap<Integer, String> map = new HashMap<>();
     int selected = 0;
@@ -132,7 +133,7 @@ public class Clubs extends Fragment {
                             for (int i = 0; i < MainActivity.clubsArr.size(); i++) {
                                 Log.d(TAG, "left:: " + MainActivity.clubsArr.get(i).second);
                             }
-                            mAdapter.notifyDataSetChanged();
+                            refresh();
                         }
                     });
 
@@ -154,11 +155,9 @@ public class Clubs extends Fragment {
         return view;
     }
 
-    private ArrayList<CardObject1> getDataSetEmpty() {
-        return null;
-    }
 
-    private ArrayList<CardObject1> getDataSet() {
+    public static void refresh() {
+        fabCount.setImageBitmap(textAsBitmap(MainActivity.clubInd.toString(), 40, Color.WHITE));
         String name = "";
         String company = "";
         ArrayList results = new ArrayList<CardObject1>();
@@ -180,7 +179,40 @@ public class Clubs extends Fragment {
                 String cardSpec = MainActivity.cards[Integer.parseInt(company)];
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                 String format = simpleDateFormat.format(new Date());
-                CardObject1 obj = new CardObject1(0, cardSpec + " of clubs", format, company); // make a map of images and the service and provide that here
+                CardObject1 obj = new CardObject1(0, cardSpec + " of " + MainActivity.clubsArr.get(i).first, format, company); // make a map of images and the service and provide that here
+                results.add(obj);
+            }
+        }
+        mAdapter.swap(results);
+    }
+
+    private ArrayList<CardObject1> getDataSetEmpty() {
+        return null;
+    }
+
+    public ArrayList<CardObject1> getDataSet() {
+        String name = "";
+        String company = "";
+        ArrayList results = new ArrayList<CardObject1>();
+
+        List<Pair<String, String>> clubsArr = new ArrayList<>();
+        clubsArr = MainActivity.clubsArr;
+
+        if (MainActivity.clubInd == 0) {
+            name = "No CLUBS added yet";
+            company = "1";
+            CardObject1 obj = new CardObject1(0, name, "", company); // make a map of images and the service and provide that here
+            results.add(obj);
+        } else {
+            Log.d(TAG, "ClubIND:: " + MainActivity.clubInd);
+            for (int i = 0; i < MainActivity.clubInd; i++) {
+                name = clubsArr.get(i).first;
+                company = clubsArr.get(i).second;
+                Log.d(TAG, "name: " + name + "\n" + "company: " + company);
+                String cardSpec = MainActivity.cards[Integer.parseInt(company)];
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                String format = simpleDateFormat.format(new Date());
+                CardObject1 obj = new CardObject1(0, cardSpec + " of " + MainActivity.clubsArr.get(i).first, format, company); // make a map of images and the service and provide that here
                 results.add(obj);
             }
         }

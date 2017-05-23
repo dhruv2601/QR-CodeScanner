@@ -35,9 +35,9 @@ public class Spades extends Fragment {
     private View view;
     private FloatingActionButton scanOwnCard;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    public static allCardRecyclerViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private FloatingActionButton fabCount;
+    public static FloatingActionButton fabCount;
     private FloatingActionButton fabDel;
     HashMap<Integer, String> map = new HashMap<>();
     int selected = 0;
@@ -131,7 +131,7 @@ public class Spades extends Fragment {
                             for (int i = 0; i < MainActivity.spadesArr.size(); i++) {
                                 Log.d(TAG, "left:: " + MainActivity.spadesArr.get(i).second);
                             }
-                            mAdapter.notifyDataSetChanged();
+                            refresh();
                         }
                     });
 
@@ -151,6 +151,36 @@ public class Spades extends Fragment {
 
         }
         return view;
+    }
+
+    public static void refresh() {
+        fabCount.setImageBitmap(textAsBitmap(MainActivity.spadeInd.toString(), 40, Color.WHITE));
+        String name = "";
+        String company = "";
+        ArrayList results = new ArrayList<CardObject1>();
+
+        List<Pair<String, String>> spadesArr = new ArrayList<>();
+        spadesArr = MainActivity.spadesArr;
+
+        if (MainActivity.spadeInd == 0) {
+            name = "No SPADES added yet";
+            company = "4";
+            CardObject1 obj = new CardObject1(0, name, "", company); // make a map of images and the service and provide that here
+            results.add(obj);
+        } else {
+            for (int i = 0; i < MainActivity.spadeInd; i++) {
+                name = spadesArr.get(i).first;
+                company = spadesArr.get(i).second;
+                Log.d(TAG, "name: " + name + "\n" + "company: " + company);
+                String cardSpec = MainActivity.cards[Integer.parseInt(company)];
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                String format = simpleDateFormat.format(new Date());
+
+                CardObject1 obj = new CardObject1(0, cardSpec + " of " + MainActivity.spadesArr.get(i).first, format, company); // make a map of images and the service and provide that here
+                results.add(obj);
+            }
+        }
+        mAdapter.swap(results);
     }
 
     private ArrayList<CardObject1> getDataSetEmpty() {
@@ -179,7 +209,7 @@ public class Spades extends Fragment {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                 String format = simpleDateFormat.format(new Date());
 
-                CardObject1 obj = new CardObject1(0, cardSpec + " of spades", format, company); // make a map of images and the service and provide that here
+                CardObject1 obj = new CardObject1(0, cardSpec + " of " + MainActivity.spadesArr.get(i).first, format, company); // make a map of images and the service and provide that here
                 results.add(obj);
             }
         }

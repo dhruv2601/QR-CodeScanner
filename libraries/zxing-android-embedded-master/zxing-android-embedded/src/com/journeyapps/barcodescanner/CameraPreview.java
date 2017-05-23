@@ -631,9 +631,9 @@ public class CameraPreview extends ViewGroup {
 
         openedOrientation = -1;
         if (cameraInstance != null) {
-            cameraInstance.close();
-            cameraInstance = null;
-            previewActive = false;
+//            cameraInstance.close();
+//            cameraInstance = null;
+//            previewActive = false;
         } else {
             stateHandler.sendEmptyMessage(R.id.zxing_camera_closed);
         }

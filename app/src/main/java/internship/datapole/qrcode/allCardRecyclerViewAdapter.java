@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.amulyakhare.textdrawable.TextDrawable;
 
 import java.util.ArrayList;
@@ -42,6 +41,7 @@ public class allCardRecyclerViewAdapter
         TextView txtName;
         TextView txtPosition;
         TextView txtCompany;
+
 
         public DataObjectHolder(View itemView) {
             super(itemView);
@@ -109,7 +109,7 @@ public class allCardRecyclerViewAdapter
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(v.getContext(), "", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(v.getContext(), "", Toast.LENGTH_SHORT).show();
 //            myClickListener.onItemClick(getAdapterPosition(), v);
         }
     }
@@ -124,6 +124,12 @@ public class allCardRecyclerViewAdapter
             Log.d(TAG, "mCardSetVal: " + mCardSet.get(i).getTxtName());
         }
         this.context = context;
+    }
+
+    public void swap(ArrayList<CardObject1> myCardSetRec) {
+        mCardSet.clear();
+        mCardSet.addAll(myCardSetRec);
+        notifyDataSetChanged();
     }
 
     @Override

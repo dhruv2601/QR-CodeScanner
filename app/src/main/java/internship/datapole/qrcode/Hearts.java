@@ -35,9 +35,9 @@ public class Hearts extends Fragment {
     private View view;
     private FloatingActionButton scanOwnCard;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    public static allCardRecyclerViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private FloatingActionButton fabCount;
+    public static FloatingActionButton fabCount;
     private FloatingActionButton fabDel;
 
     HashMap<Integer, String> map = new HashMap<>();
@@ -139,7 +139,7 @@ public class Hearts extends Fragment {
                             for (int i = 0; i < MainActivity.heartsArr.size(); i++) {
                                 Log.d(TAG, "left:: " + MainActivity.heartsArr.get(i).second);
                             }
-                            mAdapter.notifyDataSetChanged();
+                            refresh();
                         }
                     });
 
@@ -185,6 +185,36 @@ public class Hearts extends Fragment {
         }
     };
 
+    public static void refresh() {
+        fabCount.setImageBitmap(textAsBitmap(MainActivity.heartInd.toString(), 40, Color.WHITE));
+        String name = "";
+        String company = "";
+        ArrayList results = new ArrayList<CardObject1>();
+
+        List<Pair<String, String>> heartsArr = new ArrayList<>();
+        heartsArr = MainActivity.heartsArr;
+
+        if (MainActivity.heartInd == 0) {
+            name = "No HEARTS added yet";
+            company = "1";
+            CardObject1 obj = new CardObject1(0, name, "", company); // make a map of images and the service and provide that here
+            results.add(obj);
+        } else {
+            Log.d(TAG, "heartINd::  " + MainActivity.heartInd + "\n" + MainActivity.heartsArr.size());
+            for (int i = 0; i < MainActivity.heartInd; i++) {
+                name = heartsArr.get(i).first;
+                company = heartsArr.get(i).second;
+                Log.d(TAG, "name: " + name + "\n" + "company: " + company);
+                String cardSpec = MainActivity.cards[Integer.parseInt(company)];
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                String format = simpleDateFormat.format(new Date());
+                CardObject1 obj = new CardObject1(0, cardSpec + " of " + MainActivity.heartsArr.get(i).first, format, company); // make a map of images and the service and provide that here
+                results.add(obj);
+            }
+        }
+        mAdapter.swap(results);
+    }
+
     private ArrayList<CardObject1> getDataSetEmpty() {
         return null;
     }
@@ -211,7 +241,7 @@ public class Hearts extends Fragment {
                 String cardSpec = MainActivity.cards[Integer.parseInt(company)];
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                 String format = simpleDateFormat.format(new Date());
-                CardObject1 obj = new CardObject1(0, cardSpec + " of Hearts", format, company); // make a map of images and the service and provide that here
+                CardObject1 obj = new CardObject1(0, cardSpec + " of " + MainActivity.heartsArr.get(i).first, format, company); // make a map of images and the service and provide that here
                 results.add(obj);
             }
         }

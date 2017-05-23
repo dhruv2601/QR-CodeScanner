@@ -21,14 +21,33 @@
         android:layout_marginTop="60dp"
         android:src="@drawable/camera" />
 
-    <com.journeyapps.barcodescanner.CompoundBarcodeView
+
+    <com.journeyapps.barcodescanner.DecoratedBarcodeView
         android:id="@+id/bar_code"
         android:layout_marginTop="60dp"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:visibility="gone">
+        app:zxing_scanner_layout="@layout/custom_barcode_scanner">
+    </com.journeyapps.barcodescanner.DecoratedBarcodeView>
 
-    </com.journeyapps.barcodescanner.CompoundBarcodeView>
+    <!--<com.journeyapps.barcodescanner.DecoratedBarcodeView-->
+        <!--android:id="@+id/bar_code"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:layout_marginTop="60dp">-->
+
+    <!--</com.journeyapps.barcodescanner.DecoratedBarcodeView>-->
+
+    <!--<com.journeyapps.barcodescanner.CompoundBarcodeView-->
+    <!--android:id="@+id/bar_code"-->
+    <!--android:layout_marginTop="60dp"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="200dp"-->
+    <!--android:visibility="gone">-->
+
+    <!--</com.journeyapps.barcodescanner.CompoundBarcodeView>-->
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
@@ -53,4 +72,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="220dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <!--<com.romainpiel.shimmer.ShimmerTextView-->
+        <!--android:id="@+id/shimmer_tv"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:background="@drawable/blue_gradient"-->
+        <!--android:text="TAP TO OPEN PORTAL"-->
+        <!--android:textAlignment="center"-->
+        <!--android:textColor="#000000"-->
+        <!--android:textSize="25sp"-->
+        <!--app:reflectionColor="#ffffff" />-->
+
 </RelativeLayout>

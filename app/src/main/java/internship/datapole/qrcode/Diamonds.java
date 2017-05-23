@@ -36,9 +36,9 @@ public class Diamonds extends Fragment {
     private View view;
     private FloatingActionButton scanOwnCard;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    public static allCardRecyclerViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private FloatingActionButton fabCount;
+    public static FloatingActionButton fabCount;
     private FloatingActionButton fabDel;
 
     HashMap<Integer, String> map = new HashMap<>();
@@ -134,7 +134,7 @@ public class Diamonds extends Fragment {
                             for (int i = 0; i < MainActivity.diamondsArr.size(); i++) {
                                 Log.d(TAG, "left:: " + MainActivity.diamondsArr.get(i).second);
                             }
-                            mAdapter.notifyDataSetChanged();
+                            refresh();
                         }
                     });
 
@@ -153,6 +153,35 @@ public class Diamonds extends Fragment {
             });
         }
         return view;
+    }
+
+    public static void refresh() {
+        fabCount.setImageBitmap(textAsBitmap(MainActivity.diaInd.toString(), 40, Color.WHITE));
+        String name = "";
+        String company = "";
+        ArrayList results = new ArrayList<CardObject1>();
+
+        List<Pair<String, String>> clubsArr = new ArrayList<>();
+        clubsArr = MainActivity.diamondsArr;
+
+        if (MainActivity.diaInd == 0) {
+            name = "No DIAMONDS added yet";
+            company = "1";
+            CardObject1 obj = new CardObject1(0, name, "", company); // make a map of images and the service and provide that here
+            results.add(obj);
+        } else {
+            for (int i = 0; i < MainActivity.diaInd; i++) {
+                name = clubsArr.get(i).first;
+                company = clubsArr.get(i).second;
+                Log.d(TAG, "name: " + name + "\n" + "company: " + company);
+                String cardSpec = MainActivity.cards[Integer.parseInt(company)];
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                String format = simpleDateFormat.format(new Date());
+                CardObject1 obj = new CardObject1(0, cardSpec + " of " + MainActivity.diamondsArr.get(i).first, format, company); // make a map of images and the service and provide that here
+                results.add(obj);
+            }
+        }
+        mAdapter.swap(results);
     }
 
     private ArrayList<CardObject1> getDataSetEmpty() {
@@ -180,7 +209,7 @@ public class Diamonds extends Fragment {
                 String cardSpec = MainActivity.cards[Integer.parseInt(company)];
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                 String format = simpleDateFormat.format(new Date());
-                CardObject1 obj = new CardObject1(0, cardSpec + " of diamonds", format, company); // make a map of images and the service and provide that here
+                CardObject1 obj = new CardObject1(0, cardSpec + " of " + MainActivity.diamondsArr.get(i).first, format, company); // make a map of images and the service and provide that here
                 results.add(obj);
             }
         }

@@ -31,7 +31,9 @@ dependencies {
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile 'me.wangyuwei:ParticleView:1.0.4'
 //    compile 'com.journeyapps:zxing-android-embedded:3.4.0'
-
+    debugCompile 'io.github.skyhacker2:sqliteonweb:1.0.2'
+    releaseCompile 'io.github.skyhacker2:sqliteonweb-no-op:1.0.2'
+    compile 'com.romainpiel.shimmer:library:1.4.0@aar'
     testCompile 'junit:junit:4.12'
 
     compile project(':zxing-android-embedded-master')
