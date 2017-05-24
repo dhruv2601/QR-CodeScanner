@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +17,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -62,6 +64,137 @@ public class Spades extends Fragment {
             fabCount = (FloatingActionButton) view.findViewById(R.id.fab_count);
             mAdapter = new allCardRecyclerViewAdapter(getDataSet(), view.getContext());
             mRecyclerView.setAdapter(mAdapter);
+
+//            mRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+//                @Override
+//                public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+//
+//
+//                    final CharSequence[] items = {" Clubs ", " Hearts ", " Diamond "};
+//                    // arraylist to keep the selected items
+//                    final ArrayList<Integer> seletedItems = new ArrayList();
+//
+////                    pos = getAdapterPosition();
+//                    final int toRemove = allCardRecyclerViewAdapter.pos;
+//                    Log.d(TAG, "pos:::: " + allCardRecyclerViewAdapter.pos);
+//                    AlertDialog dialog = new AlertDialog.Builder(view.getContext())
+//                            .setTitle("Select a category to shift to")
+//                            .setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+//                                    if (isChecked) {
+//
+//                                        // If the user checked the item, add it to the selected items
+//                                        seletedItems.add(indexSelected);
+//                                    } else if (seletedItems.contains(indexSelected)) {
+//                                        // Else, if the item is already in the array, remove it
+//                                        seletedItems.remove(Integer.valueOf(indexSelected));
+//                                    }
+//                                }
+//                            }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int id) {
+//
+//                                    Pair<String, String> removed = MainActivity.spadesArr.get(toRemove);
+//                                    MainActivity.spadeInd--;
+//                                    Spades.delFromSpades(toRemove);
+//
+//                                    int moveTO = (seletedItems.get(0));
+//                                    if (moveTO == 0) {
+//                                        MainActivity.clubsArr.add(removed);
+//                                        MainActivity.clubInd++;
+//                                    } else if (moveTO == 1) {
+//                                        MainActivity.diamondsArr.add(removed);
+//                                        MainActivity.diaInd++;
+//                                    } else if (moveTO == 2) {
+//                                        MainActivity.heartsArr.add(removed);
+//                                        MainActivity.heartInd++;
+//                                    }
+//                                    Spades.refresh();
+//                                    //  Your code when user clicked on OK
+//                                    //  You can write the code  to save the selected item here
+//                                }
+//                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int id) {
+//                                    //  Your code when user clicked on Cancel
+//                                }
+//                            }).create();
+//                    dialog.show();
+//
+//                    return false;
+//                }
+//
+//                @Override
+//                public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+//
+//                }
+//
+//                @Override
+//                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+//
+//                }
+//            });
+
+
+//            mRecyclerView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View view) {
+//
+//                    final CharSequence[] items = {" Clubs ", " Hearts ", " Diamond "};
+//                    // arraylist to keep the selected items
+//                    final ArrayList<Integer> seletedItems = new ArrayList();
+//
+//                    final int toRemove = mAdapter.pos;
+//
+//                    AlertDialog dialog = new AlertDialog.Builder(getContext())
+//                            .setTitle("Select a category to shift to")
+//                            .setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+//                                    if (isChecked) {
+//                                        // If the user checked the item, add it to the selected items
+//                                        seletedItems.add(indexSelected);
+//                                    } else if (seletedItems.contains(indexSelected)) {
+//                                        // Else, if the item is already in the array, remove it
+//                                        seletedItems.remove(Integer.valueOf(indexSelected));
+//                                    }
+//                                }
+//                            }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int id) {
+//
+//                                    Pair<String, String> removed = MainActivity.spadesArr.get(toRemove);
+//                                    delFromSpades(toRemove);
+//
+//                                    int moveTO = (seletedItems.get(0));
+//                                    if (moveTO == 0) {
+//                                        MainActivity.clubsArr.add(removed);
+//                                        MainActivity.clubInd++;
+//                                    } else if (moveTO == 1) {
+//                                        MainActivity.diamondsArr.add(removed);
+//                                        MainActivity.diaInd++;
+//                                    } else if (moveTO == 2) {
+//                                        MainActivity.heartsArr.add(removed);
+//                                        MainActivity.heartInd++;
+//                                    }
+//
+//                                    //  Your code when user clicked on OK
+//                                    //  You can write the code  to save the selected item here
+//                                }
+//                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int id) {
+//                                    //  Your code when user clicked on Cancel
+//                                }
+//                            }).create();
+//                    dialog.show();
+//
+//                    return false;
+//                }
+//            });
+
+
             fabDel = (FloatingActionButton) view.findViewById(R.id.fab_del);
             fabDel.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -135,6 +268,7 @@ public class Spades extends Fragment {
                         }
                     });
 
+
                     // Set the neutral/cancel button click listener
                     builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
@@ -152,6 +286,17 @@ public class Spades extends Fragment {
         }
         return view;
     }
+
+    public static void delFromSpades(int x) {
+        List<Pair<String, String>> temp = new ArrayList<Pair<String, String>>();
+        for (int i = 0; i < MainActivity.spadesArr.size(); i++) {
+            if (i != x) {
+                temp.add(MainActivity.spadesArr.get(i));
+            }
+        }
+        MainActivity.spadesArr = temp;
+    }
+
 
     public static void refresh() {
         fabCount.setImageBitmap(textAsBitmap(MainActivity.spadeInd.toString(), 40, Color.WHITE));

@@ -1,8 +1,10 @@
 package internship.datapole.qrcode;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
@@ -32,6 +34,7 @@ public class allCardRecyclerViewAdapter
     private static ArrayList<CardObject1> mCardSet;
     private static MyClickListener myClickListener;
     private Context context;
+    public static int pos;
 
     public class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
@@ -42,8 +45,7 @@ public class allCardRecyclerViewAdapter
         TextView txtPosition;
         TextView txtCompany;
 
-
-        public DataObjectHolder(View itemView) {
+        public DataObjectHolder(final View itemView) {
             super(itemView);
             imageDrawable = (ImageView) itemView.findViewById(R.id.img_card);
             imgDel = (ImageView) itemView.findViewById(R.id.del);
@@ -53,6 +55,147 @@ public class allCardRecyclerViewAdapter
 
             final int tabPos = MainActivity.tabLayout.getSelectedTabPosition();
             Log.d(TAG, "tabPos: " + tabPos);
+
+            imageDrawable.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    final CharSequence[] items = {" Clubs ", " Hearts ", " Diamond "};
+                    // arraylist to keep the selected items
+                    final ArrayList<Integer> seletedItems = new ArrayList();
+
+                    pos = getAdapterPosition();
+                    final int toRemove = pos;
+                    Log.d(TAG, "pos:::: " + pos);
+                    AlertDialog dialog = new AlertDialog.Builder(view.getContext())
+                            .setTitle("Select a category to shift to")
+                            .setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+                                    if (isChecked) {
+
+                                        // If the user checked the item, add it to the selected items
+                                        seletedItems.add(indexSelected);
+                                    } else if (seletedItems.contains(indexSelected)) {
+                                        // Else, if the item is already in the array, remove it
+                                        seletedItems.remove(Integer.valueOf(indexSelected));
+                                    }
+                                }
+                            }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    Pair<String, String> removed = MainActivity.spadesArr.get(toRemove);
+                                    MainActivity.spadeInd--;
+                                    Spades.delFromSpades(toRemove);
+
+                                    int moveTO = (seletedItems.get(0));
+                                    if (moveTO == 0) {
+                                        MainActivity.clubsArr.add(removed);
+                                        MainActivity.clubInd++;
+                                    } else if (moveTO == 1) {
+                                        MainActivity.diamondsArr.add(removed);
+                                        MainActivity.diaInd++;
+                                    } else if (moveTO == 2) {
+                                        MainActivity.heartsArr.add(removed);
+                                        MainActivity.heartInd++;
+                                    }
+                                    Spades.refresh();
+                                    //  Your code when user clicked on OK
+                                    //  You can write the code  to save the selected item here
+                                }
+                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    //  Your code when user clicked on Cancel
+                                }
+                            }).create();
+                    dialog.show();
+
+//                    return false;
+                }
+            });
+
+
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                }
+//            });
+
+//            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View view) {
+//                    pos = getAdapterPosition();
+//                    return false;
+//                }
+//            });
+
+//            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View view) {
+
+
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                    final CharSequence[] items = {" Clubs ", " Hearts ", " Diamond "};
+//                    // arraylist to keep the selected items
+//                    final ArrayList<Integer> seletedItems = new ArrayList();
+//
+//                    pos = getAdapterPosition();
+//                    final int toRemove = pos;
+//                    Log.d(TAG, "pos:::: " + pos);
+//                    AlertDialog dialog = new AlertDialog.Builder(view.getContext())
+//                            .setTitle("Select a category to shift to")
+//                            .setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+//                                    if (isChecked) {
+//
+//                                        // If the user checked the item, add it to the selected items
+//                                        seletedItems.add(indexSelected);
+//                                    } else if (seletedItems.contains(indexSelected)) {
+//                                        // Else, if the item is already in the array, remove it
+//                                        seletedItems.remove(Integer.valueOf(indexSelected));
+//                                    }
+//                                }
+//                            }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int id) {
+//
+//                                    Pair<String, String> removed = MainActivity.spadesArr.get(toRemove);
+//                                    MainActivity.spadeInd--;
+//                                    Spades.delFromSpades(toRemove);
+//
+//                                    int moveTO = (seletedItems.get(0));
+//                                    if (moveTO == 0) {
+//                                        MainActivity.clubsArr.add(removed);
+//                                        MainActivity.clubInd++;
+//                                    } else if (moveTO == 1) {
+//                                        MainActivity.diamondsArr.add(removed);
+//                                        MainActivity.diaInd++;
+//                                    } else if (moveTO == 2) {
+//                                        MainActivity.heartsArr.add(removed);
+//                                        MainActivity.heartInd++;
+//                                    }
+//                                    Spades.refresh();
+//                                    //  Your code when user clicked on OK
+//                                    //  You can write the code  to save the selected item here
+//                                }
+//                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int id) {
+//                                    //  Your code when user clicked on Cancel
+//                                }
+//                            }).create();
+//                    dialog.show();
+//
+////                    return false;
+//                }
+//            });
 
             imgDel.setOnClickListener(new View.OnClickListener() {
                 @Override
