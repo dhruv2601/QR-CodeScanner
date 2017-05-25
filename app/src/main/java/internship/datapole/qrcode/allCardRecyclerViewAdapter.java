@@ -85,9 +85,27 @@ public class allCardRecyclerViewAdapter
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
 
-                                    Pair<String, String> removed = MainActivity.spadesArr.get(toRemove);
-                                    MainActivity.spadeInd--;
-                                    Spades.delFromSpades(toRemove);
+                                    Pair<String, String> removed = new Pair<String, String>("", "");       // do i need to instantiate?
+                                    if (MainActivity.tabPos == 0) {
+                                        removed = MainActivity.clubsArr.get(toRemove);
+                                        MainActivity.spadeInd--;
+                                        Spades.delFromSpades(toRemove);
+                                    }
+                                    if (MainActivity.tabPos == 1) {
+                                        removed = MainActivity.diamondsArr.get(toRemove);
+                                        MainActivity.spadeInd--;
+                                        Spades.delFromSpades(toRemove);
+                                    }
+                                    if (MainActivity.tabPos == 2) {
+                                        removed = MainActivity.heartsArr.get(toRemove);
+                                        MainActivity.spadeInd--;
+                                        Spades.delFromSpades(toRemove);
+                                    }
+                                    if (MainActivity.tabPos == 3) {
+                                        removed = MainActivity.spadesArr.get(toRemove);
+                                        MainActivity.spadeInd--;
+                                        Spades.delFromSpades(toRemove);
+                                    }
 
                                     int moveTO = (seletedItems.get(0));
                                     if (moveTO == 0) {
@@ -101,6 +119,9 @@ public class allCardRecyclerViewAdapter
                                         MainActivity.heartInd++;
                                     }
                                     Spades.refresh();
+                                    Clubs.refresh();
+                                    Hearts.refresh();
+                                    Diamonds.refresh();
                                     //  Your code when user clicked on OK
                                     //  You can write the code  to save the selected item here
                                 }
